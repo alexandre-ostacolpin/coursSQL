@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+
+    <title>SQL COURS</title>
+
+  </head>
+  <body>
+
+    <!-- ========================================= -->
+		<!-- navigation -->
+		<!-- ========================================= -->
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+			<a class="navbar-brand" href="#">cours SQL</a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+				<div class="navbar-nav">
+					<a class="nav-link active" aria-current="page" href="index.php">Accueil</a>
+					<a class="nav-link" href="#">Menu 1</a>
+					<a class="nav-link" href="#">Menu 2</a>
+					<a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Menu 3 - Disabled</a>
+				</div>
+			</div>
+		</nav>
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+            <h1 class="text-center">Les requêtes MySQL</h1>
+            </div>
+        </div><!-- Fin de row -->
+
+        <div class="row">
+            <div class="col-sm-12">
+                <h2>1- Créer une BDD : <code>CREATE DATABASE basetest CHARACTER SET 'utf8';</code></h2>
+            </div>
+        </div><!-- Fin de row -->
+
+        <div class="row">
+            <div class="col-sm-12">
+                <ul>
+                    <li>Crée une BDD<code>CREATE DATABASE basetest CHARACTER SET 'utf8';</code></li>
+                    <li>Voir les BDD dans le serveur<code>SHOW DATABASES;</code></li>
+                    <li>Utiliser une BDD<code>USE basetest;</code></li>
+                    <li>Supprimer une BDD<code>DROP DATABASE IF EXISTS basetest;</code></li>
+                    <li>...</li>
+                    <li>Créer une table dans la base 'entreprise' :
+                        <code>CREATE TABLE IF NOT EXISTS employes (
+                            id_employes int(3) NOT NULL AUTO_INCREMENT, 
+                            prenom varchar(20) DEFAULT NULL, 
+                            nom varchar(20) DEFAULT NULL, 
+                            sexe enum('m', 'f') NOT NULL, 
+                            service varchar(30) DEFAULT NULL, 
+                            date_embauche date DEFAULT NULL, 
+                            salaire float DEFAULT NULL, 
+                            PRIMARY KEY (id_employes) ) 
+                            ENGINE=InnoDB DEFAULT CHARSET=latin1;
+                        </code>
+                    </li>
+                    <li>Insérer des données dans la table 'employes'<code>INSERT INTO employes (id_employes, prenom, nom, sexe, service,
+                        date_embauche, salaire) VALUES
+                        (350, 'Jean-pierre', 'Laborde', 'm', 'direction', '1999-12-09', 5000),
+                        (388, 'Clement', 'Gallet', 'm', 'commercial', '2000-01-15', 2300),
+                        (415, 'Thomas', 'Winter', 'm', 'commercial', '2000-05-03', 3550),
+                        (417, 'Chloe', 'Dubar', 'f', 'production', '2001-09-05', 1900),
+                        (491, 'Elodie', 'Fellier', 'f', 'secretariat', '2002-02-22', 1600),
+                        (509, 'Fabrice', 'Grand', 'm', 'comptabilite', '2003-02-20', 1900),
+                        (547, 'Melanie', 'Collier', 'f', 'commercial', '2004-09-08', 3100),
+                        (592, 'Laura', 'Blanchet', 'f', 'direction', '2005-06-09', 4500),
+                        (627, 'Guillaume', 'Miller', 'm', 'commercial', '2006-07-02', 1900),
+                        (655, 'Celine', 'Perrin', 'f', 'commercial', '2006-09-10', 2700),
+                        (699, 'Julien', 'Cottet', 'm', 'secretariat', '2007-01-18', 1390),
+                        (701, 'Mathieu', 'Vignal', 'm', 'informatique', '2008-12-03', 2000),
+                        (739, 'Thierry', 'Desprez', 'm', 'secretariat', '2009-11-17', 1500),
+                        (780, 'Amandine', 'Thoyer', 'f', 'communication', '2010-01-23', 1500),
+                        (802, 'Damien', 'Durand', 'm', 'informatique', '2010-07-05', 2250),
+                        (854, 'Daniel', 'Chevel', 'm', 'informatique', '2011-09-28', 1700),
+                        (876, 'Nathalie', 'Martin', 'f', 'juridique', '2012-01-12', 3200),
+                        (900, 'Benoit', 'Lagarde', 'm', 'production', '2013-01-03', 2550),
+                        (933, 'Emilie', 'Sennard', 'f', 'commercial', '2014-09-11', 1800),
+                        (990, 'Stephanie', 'Lafaye', 'f', 'assistant', '2015-06-02', 1775);
+                    </code></li>
+                    <li>Afficher des données : SELECT</li>
+                    <li>Afficher les noms et prenoms de employés : <code>SELECT nom, prenom FROM employes;</code></li>
+                    <li>Afficher les services occupés dans l'entreprise : <code>SELECT nom, prenom, sexe FROM employes;</code></li>
+                </ul>
+
+                <h3>Le mot clef : DISTINCT</h3>
+                <ul>
+                    <li>Afficher les services occupés dans l'entreprise : <code>SELECT service FROM employes;</code></li>
+                    <li>Eviter les doublons grâce à DISTINCT : <code>SELECT DISTINCT (service) FROM employes;</code>; le mot clef DISTINCT permet d'éviter les doublons.</li>
+                </ul>
+                <h3>Les requêtes ne sont pas sensibles à la casse, mais !!!</h3>
+                <p>Une convention indique qu'il faut mettre les mot-clefs des requêtes en majuscule.</p>
+                <ul>
+                    <li>Ces deux requêtes sont identiques : = all, tout</li>
+                    <li><code>SELECT id_employes, prenom, nom, sexe, date_embauche, salaire FROM employes;</code></li>
+                    <li><code>SELECT * FROM employes;</code></li>
+                </ul>
+
+                <h3>Les condition : le mot-clef WHERE</h3>
+                <p>Nous cherchons avec une condition une partie des données</p>
+                <p>Affiche moi le nom et le prénom de la table des employés à condition que les employés fassent parti du service informatique</p>
+                <ul>
+                    <li><code>SELECT nom, prenom FROM employes WHERE service='informatique';</code></li>
+                </ul>
+            </div><!-- Fin col -->
+        </div>
+    </div><!-- Fin de container -->
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+    
+
+
+
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
+    -->
+  </body>
+</html>
