@@ -111,11 +111,228 @@
                 <p>Affiche moi le nom et le prénom de la table des employés à condition que les employés fassent parti du service informatique</p>
                 <ul>
                     <li><code>SELECT nom, prenom FROM employes WHERE service='informatique';</code></li>
+                    <li>Ou l'employé dont le prénom est thomas : <code>SELECT NOM, prenom FROM employes WHERE prenom='thomas';</code></li>
+                </ul>
+
+                <h3>Le mot-clef BETWEEN</h3>
+                <p>Afficher les employés ayant recrutés entre 2006 et 2010</p>
+                <ul>
+                    <li>SELECT * FROM employes WHERE date_embauche BETWEEN '2006-01-01' AND '2010-12-31';</li>
+                    <li>SELECT nom, prenom, date_embauche FROM employes WHERE date_embauche BETWEEN '2006-01-01' AND '2010-12-31';</li>
+                    <li>Dans une BDD la date est au format états-unien ANNEE-MOIS-JOUR // 2021-02-23</li>
+                    <li>Une requête qui donne la date du serveur <code>SELECT CURDATE();</code></li>
+                    <li>Entre une date et aujourd'hui<code>SELECT * FROM employes WHERE date_embauche BETWEEN '2006-01-01' AND CURDATE();</code></li>
+                </ul>
+
+                <h3>Le mot-clef LIKE</h3>
+                <p>Afficher les employés dont le prénom commence par s, ce qui sera très utile dans un moteur de recherche</p>
+                <p>Avec la présence des signes pourcentage avant et après la lettre ou le mot recherché, nous demandons au système de trouver des enrengistrement contenant l'expression recherchée.</p>
+                <ul>
+                    <li><code>SELECT * FROM employes WHERE prenom LIKE 's%';</code></li>
+                    <li><code>SELECT * FROM employes WHERE prenom LIKE '%-%';</code></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
                 </ul>
             </div><!-- Fin col -->
         </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <h2>5- Les opérateurs de comparaison</h2>
+            </div>
+            <div class="col-sm-16 mx-auto">
+                <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th scope="col">Opérateur</th>
+                        <th scope="col">Symbole</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">=</th>
+                        <td>est égal</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">&gt;</th>
+                        <td>strictement supérieur</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">&lt;</th>
+                        <td>strictement inférieur</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">&gt;=</th>
+                        <td>supérieur ou égal</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">&lt;=</th>
+                        <td>inférieur ou égal</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">&lt; &gt; ou !=</th>
+                        <td>est différent</td>
+                      </tr>
+                    </tbody>
+                  </table>
+            </div><!-- Fin col -->
+
+            <div class="col-sm-12">
+                <h3>l'opérateur !=</h3>
+                <ul>
+                    <li>tous les employés qui ne sont pas au service informatique <code>SELECT * FROM employes WHERE service !='informatique';</code></li>
+                </ul>
+                <h3>L'opérateur &gt;</h3>
+                <ul>
+                    <li>Tous les employés gagant plus de 3000 euros <code>SELECT nom, prenom, service, salaire FROM employes WHERE salaire > 3000;</code></li>
+                </ul>
+            </div>
+        </div><!-- Fin row -->
+
+        <div class="row">
+            <div class="col-sm-12">
+                <h2>6- Le classement avec ORDER BY</h2>
+            </div>
+
+            <div class="col-sm-12">
+                <ul>
+                    <li>Les employes triés par nom de famille et par ordre alphabétique <code>SELECT prenom, nom FROM employes ORDER BY nom;</code></li>
+                    <li>Avec ou sans ASC la requête est la même par défaut SQL tri du plus petit au plus grand</li>
+                    <li>ASC ASCendant</li>
+                    <li>En ordre descendent ou décroissant<code>DESC</code></li>
+                    <li>---</li>
+                    <li>Trier sur plusieurs colonnes : <code>SELECT nom, prenom, service, salaire FROM employes ORDER BY service ASC, salaire ASC;</code></li>
+                </ul>
+            </div><!-- Fin col -->
+        </div><!-- Fin row -->
+
+        <div class="row">
+            <div class="col-sm-12">
+                <h2>7- Limiter les resultats avec le mot-clef LIMIT</h2>
+            </div>
+
+            <div class="col-sm-12">
+                <ul>
+                    <li>Afficher les employés en les classant par salaire (du + grand au plus petit) et en les affichant par 3 <code>SELECT nom, prenom, service, salaire FROM employes ORDER BY salaire DESC LIMIT 3;</code></li>
+                    <li>le premier chiffre précise l'enrengistrement de départ (0 définit le 1er enrengistrement en informatique), le 2nd chiffre nous indique le nombre de résultats que l'on souhaite obtenir</li>
+                    <li>AUTRE ex. : <code>SELECT nom, prenom, service, salaire FROM employes ORDER BY salaire DESC LIMIT 6,3;</code></li>
+                    <li>le mot-clef ou la close LIMIT est utile pour faire une pagination</li>
+                </ul>
+            </div>
+        </div><!-- Fin row -->
+
+        <div class="row">
+            <div class="col-sm-12">
+                <h2>8- Réaliser des calculs dans nos requêtes</h2>
+            </div>
+
+            <div class="col-sm-12">
+                <ul>
+                    <li>Afficher la liste des employés avec leur salaire annuel : <code>SELECT nom, prenom, salaire, salaire*12 FROM employes ORDER BY salaire;</code></li>
+                </ul>
+            </div>
+        
+            <div class="col-sm-12">
+                <h3>Utiliser un alias avec AS avec le mot-clef AS</h3>
+            </div>
+            <div class="col-sm-12">
+                <ul>
+                    <li><code>SELECT nom, prenom, salaire, salaire*12 AS salaire_annuel FROM employes ORDER BY salaire_annuel DESC;</code></li>
+                    <li>Le mot-clef AS permet de définir un alias</li>
+                </ul>
+            </div>
+
+            <div class="col-sm-12">
+                <h3>Calculer une somme avec SUM, et une moyenne avec AVG</h3>
+            </div>
+            <div class="col-sm-12">
+                <ul>
+                    <li>SUM faire une somme, une addition : <code>SELECT SUM(salaire*12) FROM employes;</code></li>
+                    <li>AVG faire la moyenne (average)<code>SELECT AVG(salaire*12) FROM employes;</code> ou la moyenne mensuelle : <code>SELECT AVG(salaire) FROM employes;</code></li>
+                </ul>
+            </div>
+
+            <div class="col-sm-12">
+                <h3>Arrondir avec ROUND</h3>
+            </div>
+            <div class="col-sm-12">
+                <ul>
+                    <li>Arrondir un calcul : <code>SELECT ROUND( AVG(salaire) ) FROM employes;</code></li>
+                    <li>Faire un alias <code>SELECT ROUND (AVG(salaire)) AS moyenne_mensuelle from employes;</code></li>
+                </ul>
+            </div>
+
+            <div class="col-sm-12">
+                <h3>Compter avec COUNT</h3>
+            </div>
+            <div class="col-sm-12">
+                <ul>
+                    <li>Compter le nombre d'employés : <code>SELECT COUNT(*) FROM employes WHERE sexe='f';</code></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <h2>Isoler une valeur minimum/maximum avec MIN ou MAX</h2>
+            </div>
+            <div class="col-sm-12">
+                <ul>
+                    <li>Trouver le salaire minimum : <code>SELECT MIN(salaire) FROM employes;</code></li>
+
+                    <li>Par contre cette requête ne fonctionnera pas : <code><del>SELECT prenom, MIN(salaire) FROM employes;</del></code>, pour trouver le salaire le plus bas et la personne qui gange ce salaire il faut écrire <code>SELECT prenom, salaire FROM employes WHERE salaire = (SELECT MIN(salaire) FROM employes);</code>: Le système va d'abord exécuter la requête entre parenthèse pour conaître le resultat et utiliser comme source pour l'autre requête</li>
+
+                    <li>Trouver le salaire maximum :<code>SELECT MAX(salaire) FROM employes;</code></li>
+                    <li>Trouver qui gangne le plus : <code>SELECT prenom, salaire FROM employes WHERE salaire = (SELECT MAX(salaire) FROM employes);</code></li>
+                    <li>Trouver qui gagne 1390 Euros : <code>SELECT nom, prenom, salaire FROM employes WHERE salaire = 1390;</code></li>
+                </ul>
+            </div>
+        </div><!-- Fin row -->
+
+        <div class="row">
+            <div class="col-sm-12">
+                <h2>Condition IN avec plusieur valeurs</h2>
+            </div>
+
+            <div class="col-sm-12">
+                <ul>
+                    <li>Trouver les employés à la comptabilité et au service informatique <code>SELECT nom, prenom, service FROM employes WHERE service IN('comptabilite', 'informatique');</code> on appelle cela une requête imbriquée.</li>
+
+                    <li>Trouver le salaire à l'heure des personne<code>SELECT nom, prenom, salaire, salaire/150 AS salaire_heure FROM employes ORDER BY salaire_heure ASC;</code></li>
+
+                    <li>...</li>
+                    <li>= (égal) permet d'annoncer 1 seul valeur</li>
+                    <li>IN permet d'annoncer plusieurs valeurs</li>
+                    <li>...</li>
+                    <li>Trouver les employés qui ne sont pas ua service informatique et à la comptabilité avec NOT IN<code>SELECT nom, prenom, service FROM employes WHERE service NOT IN ('comptabilité', 'informatique');</code></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <h2>COndition multiples, différents champs et valeurs</h2>
+            </div>
+            <div class="col-sm-12">
+                <ul>
+                    <li>Les employés qui travaillent au service commercial et qui gagne un salaire inférieur ou égal à 2000 €<code>SELECT nom, prenom, salaire, service FROM employes WHERE service = 'commercial' AND salaire <= 2000;</code></li>
+                    <li><code></code></li>
+                </ul>
+            </div>
+
+            <div class="col-sm-12">
+                <h3>Ordre de priorité sur les conditions AND et OR</h3>
+            </div>
+            <div class="col-sm-12">
+                <ul>
+                    <li><code>SELECT nom, prenom, service, salaire FROM employes WHERE service ='production' AND salaire = 1900 OR salaire = 2300;</code></li>
+                    <li>Lorsqu'il y a AND et OR au sein de la même requête, le système lit la condition de la droite vers la gauche et il verra d'abord <code>salaire = 1900 OR salaire = 2300;</code>et ensuite <code>service ='production';</code></li>
+                </ul>
+            </div>
+        </div><!-- Fin row -->
     </div><!-- Fin de container -->
-    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br>
 
     
 
