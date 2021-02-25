@@ -328,9 +328,92 @@
                 <ul>
                     <li><code>SELECT nom, prenom, service, salaire FROM employes WHERE service ='production' AND salaire = 1900 OR salaire = 2300;</code></li>
                     <li>Lorsqu'il y a AND et OR au sein de la même requête, le système lit la condition de la droite vers la gauche et il verra d'abord <code>salaire = 1900 OR salaire = 2300;</code>et ensuite <code>service ='production';</code></li>
+                    <li>Pour garantir l'odre naturel de lecture (dela gauche vers la droite) on utilisera les parenthèses : <code>SELECT prenom, nom, service, salaire FROM employes WHERE service='preduction' AND (salaire= 1900 OR salaire= 2300);</code></li>
                 </ul>
             </div>
         </div><!-- Fin row -->
+
+        <div class="row">
+            <div class="col-sm-12">
+                <h2>Les regroupements avec groupe BY</h2>
+            </div>
+            <div class="col-sm-12">
+                <ul>
+                    <li>Si on veut connaître le nombre d'employés par service : <code>SELECT service, COUNT(*) AS nombre_employe FROM employes GROUP BY service;</code></li>
+                </ul>
+            </div>
+
+            <div class="col-m-12">
+                <h3>Utilisation du mat-clef HAVING, ayant</h3>
+            </div>
+            <div class="col-m-12">
+                <ul>
+                    <li>On impose une condition COUNT et HAVING<code>SELECT service, COUNT(*) AS nombre_employe FROM employes GROUP BY service HAVING COUNT(*) > 2;</code></li>
+                </ul>
+            </div>
+        </div><!-- Fin row -->
+        <hr>
+        <div class="row border border-success">
+            <div class="col-sm-12">
+                <h2>Les requêtes d'insertion avec INSERT</h2>
+            </div>
+            <div class="col-sm-12">
+                <h3>La requête INSERT INTO</h3>
+            </div>
+            <div class="col-sm-12">
+                <ul>
+                    <li>Insérer un enrengistrement : 1ère méthode <code>INSERT INTO employes(prenom, nom, sexe, service, date_embauche, salaire) VALUES ('Alexis', 'Richy', 'm', 'informatique', '2011-12-28', 1800);</code></li>
+                    <li>Insérer un enrengistrement : 2nd méthode<code>INSERT INTO employes VALUES (NULL, 'jean', 'Richy', 'm', 'informatique', '2011-12-28', 1800);</code>NULL nous permet de laisser le champs id_employes se remplir seul car il est auto-incrémenté.</li>
+                </ul>
+            </div>
+        </div><!-- Fin row -->
+        <hr>
+        <div class="row">
+            <div class="col-sm-12">
+                <h2>Les requêtes de modification avec UPDATE</h2>
+            </div>
+            <div class="col-sm-12">
+                <h3>La requête UPDATE</h3>
+            </div>
+            <div class="col-sm-12">
+                <ul>
+                    <li>Augmenter le salaire d'un employé : <code>UPDATE employes SET salaire = 1871 WHERE id_employes = 990;</code></li>
+                    <li>Il est recommandé de modifier une enregistrement en ciblant son id, l'id étant unique</li>
+                    <li>...</li>
+                    <li>Pour modifier plusieur colonnes respectons l'ordre des colonnes : <code>UPDATE employes SET service = 'commercial', salaire = 1999 WHERE id_employes = 990;</code></li>
+                </ul>
+            </div>
+            <div class="col-sm-12">
+                <h3>La requête DELETE</h3>
+            </div>
+            <div class="col-sm-12">
+                <ul>
+                    <li>Supprimer un enrengistrement ; <code>DELETE FROM employes WHERE id_employes = 388;</code></li>
+                    <li>Supprimer plusieurs informations, plusieurs enrengistrement : <code>DELETE FROM employes WHERE service = 'informatique';</code></li>
+                </ul>
+            </div>
+        </div><!-- Fin row -->
+
+        <div class="row">
+            <div class="col-sm-12">
+                exercice
+            </div>
+            <div class="col-sm-12">
+                <ol>
+                    <li>Afficher la profession de l'employé 547 : <code>SELECT service FROM employes WHERE id_employes=547;</code></li>
+                    <li>Afficher la date d'embauche d'Amandine : <code>SELECT date_embauche FROM employes WHERE prenom='amandine';</code></li>
+                    <li>Afficher le nombre de commerciaux : <code>SELECT COUNT(*) as 'nbr_commerciaux' FROM employes WHERE service='commercial';</code></li>
+                    <li>Afficher le coût des commerciaux sur 1 année : <code>SELECT SUM(salaire*12) FROM employes WHERE service='commercial';</code></li>
+                    <li>Afficher le salaire moyen par service : <code>SELECT service, round(AVG( salaire )) FROM employes GROUP BY service;</code></li>
+                    <li>Afficher le nombre de recrutements sur l'année 2010 : <code>SELECT COUNT(*) as 'nb de recrutement' FROM employes WHERE date_embauche BETWEEN '2010-01-01' AND '2010-12-31';</code></li>
+                    <li>Augmenter le salaire pour chaque employé de 100 € : <code>UPDATE employes SET salaire=salaire+100;</code></li>
+                    <li>Afficher le nombre de services (différents) : <code>SELECT COUNT(DISTINCT service) FROM employes;</code></li>
+                    <li>Afficher les informations de l'employé du service commercial gagnant le salaire le plus élevé : <code>SELECT prenom, salaire FROM employes WHERE service='commercial' AND salaire = ( SELECT MAX( salaire ) FROM employes WHERE service='commercial' );</code></li>
+                    <li>Afficher l'employé ayant été embauché en dernier : <code>SELECT * FROM employes WHERE date_embauche = (SELECT max(date_embauche) FROM employes);</code></li>
+                </ol>
+            </div>
+        </div><!-- Fin row -->
+
     </div><!-- Fin de container -->
     <br><br><br><br><br><br><br><br><br><br><br><br><br>
 
