@@ -156,6 +156,10 @@
                     <li>...</li>
                     <li>Afficher les titres des livres que Chloé n'a pas emprunté à la bibliothèque : <code>SELECT titre FROM livre WHERE id_livre NOT IN (SELECT id_livre FROM emprunt WHERE id_abonne = (SELECT id_abonne FROM abonne WHERE prenom = 'Chloé'));</code></li>
 
+                    <li>Afficher les tittes des livres que Chloé n'a pas encore rendu à la bibliothèque : <code>SELECT titre FROM livre WHERE id_livre IN (SELECT id_livre FROM emprunt WHERE date_rendu IS NULL AND id_abonne = (SELECT id_abonne FROM abonne WHERE prenom='chloe'));</code></li>
+
+                    <li>Combien de livre Guillaume a emprunté à la bibliothèque : <code>SELECT COUNT(*) AS 'nombre de livre' FROM emprunt WHERE id_abonne = (SELECT id_abonne FROM abonne WHERE prenom='guillaume');</code></li>
+
                     
                 </ul>
             </div>
